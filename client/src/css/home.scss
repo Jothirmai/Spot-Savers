@@ -1,0 +1,238 @@
+/* General Body Styles for better typography and background */
+body {
+    font-family: 'Poppins', sans-serif; /* Using a modern, clean font */
+    color: #333; /* Darker text for better readability */
+    line-height: 1.6;
+    background-color: #f8f9fa; /* Light background for the overall page */
+}
+
+/* --- Banner Section --- */
+.banner {
+    height: 80vh; /* Responsive height for banner */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://th.bing.com/th/id/OIP.Jm4uWNbN7C4NjlJGExtXGQHaFj?w=253&h=189&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3'); /* Darker overlay for text readability */
+    background-size: cover;
+    background-position: center center; /* Center the background image */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+    position: relative; /* For potential overlay animations */
+    overflow: hidden; /* Ensures no overflow from particle effects, etc. */
+}
+
+.overlay {
+    padding: 40px;
+    background: rgba(0, 0, 0, 0.7); /* Slightly less opaque overlay */
+    border-radius: 15px; /* Rounded corners for the overlay */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* Soft shadow for depth */
+    animation: fadeIn 1.5s ease-out; /* Fade-in animation for the overlay */
+}
+
+.overlay h1 {
+    font-size: 3.5rem; /* Larger, more impactful heading */
+    margin-bottom: 20px;
+    letter-spacing: 1.5px; /* Spacing out letters for a modern look */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Text shadow for emphasis */
+}
+
+.overlay h1 span {
+    font-weight: 300; /* Lighter weight for the sub-text */
+    display: block; /* Puts "You have came to right place" on a new line */
+    font-size: 2.2rem;
+    margin-top: 10px;
+    animation: slideInUp 1.2s ease-out forwards; /* Slide up animation for the span */
+    opacity: 0; /* Start invisible for animation */
+}
+
+/* --- Spinner Animation (already good, but slight refinement) --- */
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.animate-spinner {
+    animation: spin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite; /* More natural spin */
+    color: #007bff; /* Primary color for the spinner */
+    stroke: currentColor; /* Ensure stroke uses the color */
+}
+
+.page-spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Use min-height for better responsiveness */
+    background-color: #e9ecef; /* Light background for the spinner page */
+}
+
+/* --- Services Cards (How Spot-Savers Works) --- */
+.container {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+section h2 {
+    text-align: center;
+    font-size: 2.8rem;
+    margin-bottom: 60px;
+    color: #007bff; /* Primary color for headings */
+    position: relative;
+}
+
+section h2::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 4px;
+    background-color: #007bff;
+    margin: 15px auto 0;
+    border-radius: 2px;
+}
+
+.services-card-icon {
+    height: 200px; /* Slightly adjusted height */
+    width: 100%; /* Ensure it takes full width of its container */
+    object-fit: contain;
+    background-color: #ffffff;
+    border-radius: 15px;
+    padding: 20px; /* Padding inside the icon card */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Smooth hover effect */
+}
+
+.services-card-icon:hover {
+    transform: translateY(-10px) scale(1.02); /* Lift and slightly enlarge on hover */
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+.card {
+    border: none;
+    border-radius: 15px;
+    transition: all 0.3s ease-in-out;
+    background-color: #fff;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); /* Subtle card shadow */
+    padding: 30px; /* More padding for better spacing */
+    margin-bottom: 30px; /* Space between cards on smaller screens */
+}
+
+.card:hover {
+    transform: translateY(-5px); /* Lift card slightly on hover */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); /* More pronounced shadow on hover */
+}
+
+.card h3 {
+    font-size: 1.8rem;
+    color: #0056b3; /* Darker blue for headings */
+    margin-top: 25px;
+    margin-bottom: 15px;
+}
+
+.card p {
+    font-size: 1rem;
+    color: #555;
+}
+
+/* --- Testimonial Section --- */
+.testimonial-card {
+    margin-top: 60px; /* Adjust as needed; increased to account for image coming out */
+    background-color: #2c3e50; /* Darker background for testimonials */
+    color: #ecf0f1; /* Light text color */
+    border-radius: 15px;
+    padding: 40px 30px 20px; /* Adjusted padding, top padding to be mindful of image */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    position: relative; /* Crucial for positioning the image */
+    overflow: visible; /* Allows content (image) to extend outside the card boundaries */
+    transition: all 0.4s ease-in-out; /* Smooth transition for hover */
+}
+
+.testimonial-card:hover {
+    transform: scale(1.03); /* Slightly enlarge on hover */
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.45); /* More intense shadow */
+}
+
+.testimonial-card img {
+    height: 120px; /* Larger profile images */
+    width: 120px;
+    border-radius: 50%; /* Makes the image perfectly round */
+    object-fit: cover; /* Ensures the image covers the area without distortion */
+    border: 5px solid #007bff; /* Accent border around profile pic */
+    margin: 0 auto; /* Center the image horizontally */
+    margin-top: -80px; /* Pull image up to overlap card top - this is key for "out of the card" */
+    display: block; /* Ensures margin auto works and it takes its own line */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease-in-out;
+    position: relative; /* Allows z-index to bring it above the card */
+    z-index: 10; /* Ensures the image is on top of the card */
+}
+
+.testimonial-card img:hover {
+    transform: scale(1.05) rotate(5deg); /* Slight rotation on image hover */
+}
+
+.testimonial-card p {
+    font-size: 1.1rem;
+    margin-top: 25px; /* Adjust as needed, ensure enough space below the image */
+    margin-bottom: 25px;
+    font-style: italic; /* Italicize quotes */
+    color: #ecf0f1;
+}
+
+.testimonial-card strong {
+    font-size: 1.6rem; /* Larger name */
+    display: block; /* New line for job title */
+    color: #007bff; /* Primary color for name */
+}
+
+.testimonial-card span {
+    font-weight: 400; /* Normal weight for job title */
+    font-size: 0.95rem;
+    color: #bdc3c7; /* Lighter color for job title */
+    display: block;
+    margin-top: 5px;
+}
+
+/* --- Responsive Design Adjustments for Testimonial Images --- */
+@media (max-width: 992px) {
+    .testimonial-card {
+        margin-top: 90px; /* Adjust margin for mobile to prevent overlap with image on smaller screens */
+    }
+
+    .testimonial-card img {
+        margin-top: -60px; /* Re-adjust image margin for tablet views */
+    }
+}
+
+@media (max-width: 768px) {
+    .testimonial-card {
+        margin-top: 80px;
+    }
+
+    .testimonial-card img {
+        margin-top: -50px;
+        height: 100px; /* Slightly smaller image on smaller mobiles */
+        width: 100px;
+    }
+
+    .testimonial-card strong {
+        font-size: 1.4rem;
+    }
+    .testimonial-card span {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .testimonial-card {
+        margin-top: 70px; /* Further adjustment for very small screens */
+    }
+
+    .testimonial-card img {
+        margin-top: -45px;
+        height: 90px;
+        width: 90px;
+    }
+}

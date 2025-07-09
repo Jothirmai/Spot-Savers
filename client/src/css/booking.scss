@@ -1,0 +1,437 @@
+/* --- Variables --- */
+$primary-color: #007bff; // Your primary blue (for buttons, pagination active state)
+$secondary-color: #6c757d; // Dark Grey for general text
+$dark-blue-bg: #222e4c; // The deep blue from Spot-Savers/Login pages
+$light-grey-text: #adb5bd; // Lighter grey for subtle text on dark backgrounds
+$light-text-color: #ffffff; // White text for dark backgrounds and active elements
+
+$white-card-bg: #ffffff; // Background for the main content card
+$page-background: #f8f9fa; // Very light grey for the background outside the dark header
+
+$border-color: #e0e0e0; // Lighter border for table lines and elements
+$shadow-main-card: 0 10px 25px rgba(0, 0, 0, 0.1); // Prominent shadow for the white card
+$shadow-table: 0 4px 12px rgba(0, 0, 0, 0.05); // Lighter shadow for the table itself
+
+// Status Colors for table badges/tags
+$status-tag-pending: #ffc107; // Yellow/Orange
+$status-tag-rejected: #dc3545; // Red
+
+// Button Colors (separate from status tags where needed)
+$success-button-color: #28a745; // Green for success buttons (like 'Approve')
+$danger-button-color: #dc3545; // Red for danger buttons (like 'Reject', 'Delete')
+
+/* --- Global Spinner Animation --- */
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.animate-spinner {
+    animation: spin 1s linear infinite;
+}
+
+/* --- Booking Page Layout --- */
+.booking-page-wrapper {
+    min-height: 100vh;
+    background-color: $page-background; // Base page background color
+    display: flex;
+    flex-direction: column; // Stack header and content vertically
+    align-items: center; // Center content horizontally
+}
+
+// New Header Background Section
+.booking-header-background {
+    width: 100%;
+    min-height: 200px; // A fixed height for the header background
+    background-color: $dark-blue-bg; // The dark blue from your images
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 20px; // Adjust padding if needed
+    box-sizing: border-box; // Include padding in the height calculation
+}
+
+.booking-title.header-title {
+    font-size: 3.5rem; // Larger title for the header
+    font-weight: 700;
+    color: $light-text-color; // White text for the title on dark background
+    margin-bottom: 0; // Remove default margin as it's centered
+    text-align: center;
+    letter-spacing: -0.03em;
+    padding-top: 20px; // Some top padding if needed
+}
+
+.booking-container {
+    width: 100%;
+    max-width: 1300px;
+    margin-top: -80px; // Pull the white card up into the dark blue header
+    margin-left: auto;
+    margin-right: auto;
+    padding: 30px;
+    background-color: $white-card-bg; // White background for the main content card
+    border-radius: 12px;
+    box-shadow: $shadow-main-card; // Stronger shadow for the card
+    position: relative; // Needed for z-index if other elements overlap
+    z-index: 1; // Ensure it's above other elements if necessary
+}
+
+// Ensure the actual title within the white card is hidden if header-title is present
+// or if you want to keep it visible, adjust its styling here.
+// For now, I'm assuming 'My Bookings' in the white card is removed,
+// and the main title is in the dark header. If not, clarify.
+// If you want a title INSIDE the white card too, give it a different class.
+
+
+/* --- Loading Spinner Section --- */
+.booking-spinner-wrapper {
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    .spinner-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        font-size: 1.2rem;
+        color: $primary-color;
+        margin-bottom: 10px;
+        svg {
+            width: 50px;
+            height: 50px;
+            stroke: $primary-color;
+            path {
+                fill: $primary-color;
+            }
+        }
+    }
+    span {
+        font-size: 1.1rem;
+        color: $secondary-color;
+        font-style: italic;
+    }
+}
+
+/* --- Table Styling --- */
+.booking-table-section {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 8px; // Rounded corners for the table content area
+    // Remove individual border and shadow here, as the .booking-container acts as the card
+    // border: 1px solid $border-color;
+    // box-shadow: $shadow-table;
+    margin-bottom: 30px; // Space below the table before pagination
+    background-color: $white-card-bg; // Ensure table background is white
+    padding-top: 20px; // Some padding above the table inside the card
+}
+
+.booking-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 1000px;
+    table-layout: auto; // Allow columns to size based on content, but can be fixed if preferred
+    font-size: 0.95rem;
+
+    th, td {
+        padding: 15px 12px; // Slightly less padding for a tighter look
+        text-align: left;
+        border-bottom: 1px solid $border-color; // Light bottom border for rows
+        color: $secondary-color; // Default text color
+        font-weight: 400; // Normal font weight for data cells
+    }
+
+    th {
+        background-color: transparent; // No background for headers, as per image
+        color: $dark-blue-bg; // Dark blue text for headers
+        font-weight: 600; // Bolder header text
+        text-transform: capitalize; // Capitalize each word, not all uppercase
+        font-size: 0.9rem; // Slightly smaller header font size
+        letter-spacing: 0; // Remove letter spacing for headers
+        border-bottom: 2px solid $primary-color; // Distinct bottom border for headers
+        white-space: nowrap; // Prevent header text from wrapping
+    }
+
+    tbody {
+        tr {
+            background-color: $white-card-bg;
+            transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+
+            &:hover {
+                background-color: lighten($page-background, 3%); // Lighter hover effect
+                transform: translateY(-2px);
+                box-shadow: 0 4px 10px rgba(0,0,0,0.08); // Subtle lift
+            }
+        }
+        // Remove bottom border from the last row for a cleaner look
+        tr:last-child {
+            td {
+                border-bottom: none;
+            }
+        }
+    }
+
+    // Status Tags Styling
+    .status-approved, .status-pending, .status-rejected {
+        font-weight: 600;
+        padding: 6px 12px;
+        border-radius: 20px;
+        display: inline-block;
+        font-size: 0.85rem;
+        text-align: center;
+        white-space: nowrap;
+    }
+
+    .status-approved {
+        color: $light-text-color;
+        background-color: $primary-color;
+    }
+    .status-pending {
+        color: $dark-blue-bg;
+        background-color: $status-tag-pending;
+    }
+    .status-rejected {
+        color: white;
+        background-color: $status-tag-rejected;
+    }
+
+    .booking-no-data {
+        padding: 30px;
+        font-style: italic;
+        color: $secondary-color;
+        font-size: 1.1rem;
+        text-align: center;
+    }
+
+    .booking-actions {
+        white-space: nowrap;
+        padding: 10px 15px;
+        .action-btn {
+            padding: 8px 12px; // Slightly smaller buttons
+            border-radius: 6px; // Slightly less rounded buttons
+            font-size: 0.85rem; // Smaller font for actions
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px; // Smaller gap for icons
+            cursor: pointer;
+            text-decoration: none;
+            &:not(:last-child) {
+                margin-right: 8px; // Smaller space between buttons
+            }
+            i {
+                font-size: 0.9em; // Adjust icon size relative to text
+            }
+        }
+        // Button styles
+        .btn-primary-outline {
+            border: 1px solid $primary-color;
+            color: $primary-color;
+            background-color: transparent;
+            &:hover {
+                background-color: $primary-color;
+                color: $light-text-color;
+                box-shadow: 0 3px 8px rgba($primary-color, 0.2);
+            }
+        }
+        .btn-success-outline {
+            border: 1px solid $success-button-color;
+            color: $success-button-color;
+            background-color: transparent;
+            &:hover {
+                background-color: $success-button-color;
+                color: $light-text-color;
+                box-shadow: 0 3px 8px rgba($success-button-color, 0.2);
+            }
+        }
+        .btn-danger-outline {
+            border: 1px solid $danger-button-color;
+            color: $danger-button-color;
+            background-color: transparent;
+            &:hover {
+                background-color: $danger-button-color;
+                color: $light-text-color;
+                box-shadow: 0 3px 8px rgba($danger-button-color, 0.2);
+            }
+        }
+        .action-status-text {
+            font-size: 0.85rem;
+            color: $secondary-color;
+            font-style: italic;
+            padding: 5px;
+        }
+    }
+
+    // Centering the status tag within its table cell
+    td {
+        &.status-approved, &.status-pending, &.status-rejected {
+            text-align: center;
+            vertical-align: middle; // Also center vertically for consistency
+        }
+    }
+}
+
+
+/* --- Pagination Styling --- */
+.booking-pagination-nav {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    margin-bottom: 20px;
+
+    .pagination-list {
+        display: flex;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px $shadow-table; // Use table shadow variable
+
+        .pagination-item {
+            margin: 0;
+
+            .pagination-link {
+                display: block;
+                padding: 12px 18px;
+                border: 1px solid $border-color;
+                background-color: $white-card-bg;
+                color: $primary-color;
+                text-decoration: none;
+                transition: all 0.2s ease;
+                cursor: pointer;
+                border-right: none;
+
+                &:hover {
+                    background-color: lighten($primary-color, 45%);
+                    color: darken($primary-color, 10%);
+                }
+            }
+
+            &:first-child .pagination-link {
+                border-top-left-radius: 10px;
+                border-bottom-left-radius: 10px;
+            }
+            &:last-child .pagination-link {
+                border-top-right-radius: 10px;
+                border-bottom-right-radius: 10px;
+                border-right: 1px solid $border-color;
+            }
+
+            &.active .pagination-link {
+                background-color: $primary-color;
+                color: $light-text-color;
+                border-color: $primary-color;
+                font-weight: bold;
+                &:hover {
+                    background-color: darken($primary-color, 8%);
+                }
+            }
+        }
+    }
+}
+
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 992px) {
+    .booking-title.header-title {
+        font-size: 3rem;
+    }
+    .booking-container {
+        padding: 25px;
+        margin-top: -60px; // Adjust pull-up
+    }
+    .booking-table {
+        min-width: 800px;
+    }
+    .booking-table th, .booking-table td {
+        padding: 12px 10px;
+        font-size: 0.9rem;
+    }
+    .booking-table .booking-actions .action-btn {
+        padding: 8px 12px;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .booking-header-background {
+        min-height: 150px; // Shorter header on smaller screens
+        padding: 40px 15px;
+    }
+    .booking-title.header-title {
+        font-size: 2.5rem;
+    }
+    .booking-container {
+        padding: 20px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        margin-top: -50px; // Adjust pull-up
+    }
+    .booking-table {
+        min-width: 650px;
+    }
+    .booking-table th, .booking-table td {
+        padding: 10px 8px;
+        font-size: 0.85rem;
+    }
+    .booking-table .booking-actions {
+        flex-direction: column;
+        gap: 8px;
+        .action-btn {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+    .booking-pagination-nav .pagination-list .pagination-item .pagination-link {
+        padding: 10px 14px;
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .booking-header-background {
+        min-height: 120px; // Even shorter header
+        padding: 30px 10px;
+    }
+    .booking-title.header-title {
+        font-size: 2rem;
+    }
+    .booking-container {
+        padding: 15px;
+        border-radius: 8px;
+        margin-top: -40px; // Adjust pull-up
+    }
+    .booking-table {
+        min-width: 500px;
+    }
+    .booking-table th, .booking-table td {
+        padding: 8px 5px;
+        font-size: 0.8rem;
+    }
+    .booking-table .status-approved, .status-pending, .status-rejected {
+        padding: 4px 8px;
+        font-size: 0.75rem;
+    }
+    .booking-table .booking-actions .action-btn {
+        padding: 6px 10px;
+        font-size: 0.75rem;
+        gap: 5px;
+    }
+    .booking-pagination-nav .pagination-list {
+        flex-wrap: wrap;
+        justify-content: center;
+        .pagination-item {
+            margin: 2px;
+            .pagination-link {
+                border-radius: 6px;
+            }
+            &:first-child .pagination-link,
+            &:last-child .pagination-link {
+                border-radius: 6px;
+                border-right: 1px solid $border-color;
+            }
+        }
+    }
+}

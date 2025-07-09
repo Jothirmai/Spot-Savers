@@ -1,0 +1,325 @@
+/* --- Global Variables (Optional but recommended for consistency) --- */
+$primary-color: #007bff;
+$secondary-color: #6c757d;
+$dark-bg: #1a202c; // Slightly softer dark than pure black
+$light-text: #e0e0e0;
+$light-accent: #17a2b8; // Info color
+
+/* --- Base Styles --- */
+body {
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+    line-height: 1.6;
+    background-color: #f8f9fa;
+    overflow-x: hidden; // Prevent horizontal scroll from animations
+}
+
+a {
+    text-decoration: none; // Remove underline from all links by default
+    transition: color 0.3s ease-in-out;
+    &:hover {
+        text-decoration: none;
+    }
+}
+
+/* --- Main Container --- */
+.main-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; // Ensures footer sticks to bottom
+}
+
+/* --- Navbar --- */
+.navbar {
+    background-color: $dark-bg !important; // Use variable, !important if needed
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); // Softer, more modern shadow
+    padding: 0.8rem 1rem; // Slightly more vertical padding
+    transition: background-color 0.3s ease-in-out;
+    /* Removed fixed-top related styles */
+
+    .navbar-brand {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: $primary-color !important; // Brand in primary color
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        transition: transform 0.3s ease-in-out;
+        &:hover {
+            transform: scale(1.05); // Slight hover effect
+        }
+    }
+
+    .navbar-nav {
+        .nav-item {
+            margin: 0 0.5rem; // Spacing between nav items
+            .nav-link {
+                color: $light-text;
+                font-weight: 500;
+                padding: 0.5rem 1rem;
+                position: relative;
+                overflow: hidden; // For underline animation
+
+                &::after { // Animated underline
+                    content: '';
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    width: 0;
+                    height: 2px;
+                    background-color: $primary-color;
+                    transition: width 0.3s ease-in-out;
+                }
+
+                &:hover {
+                    color: $primary-color;
+                    &::after {
+                        width: 100%;
+                    }
+                }
+
+                &.active { // Active link styling
+                    color: $primary-color;
+                    font-weight: 700;
+                    &::after {
+                        width: 100%;
+                        background-color: $primary-color;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Animated Navbar (for initial load, requires an animation library like Animate.css if not custom) */
+.animated-navbar {
+    animation: fadeInDown 0.8s ease-out forwards;
+    @keyframes fadeInDown {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+}
+
+/* --- User Avatar --- */
+.user-avatar {
+    width: 38px; // Slightly larger for prominence
+    height: 38px;
+    background-color: $primary-color; // Brand color for avatar background
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 1.1rem; // Larger initial
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+        background-color: darken($primary-color, 10%);
+        transform: scale(1.1) rotate(5deg); // Fun hover effect
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+    }
+}
+
+.profile-avatar-link {
+    padding: 0 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* --- Login/Logout Buttons --- */
+.login-btn, .logout-btn {
+    background-color: $light-accent; // Use info color for buttons
+    border-color: $light-accent;
+    color: white;
+    font-weight: 600;
+    padding: 0.4rem 1.2rem;
+    border-radius: 25px; // Pill shape
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+        background-color: darken($light-accent, 10%);
+        border-color: darken($light-accent, 10%);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    &:active {
+        transform: translateY(0);
+        box-shadow: none;
+    }
+}
+
+/* --- Main Content Area --- */
+main {
+    flex-grow: 1; // Allows main content to take available space, pushing footer down
+    // Removed padding-top here as navbar is no longer fixed
+}
+
+/* --- Footer --- */
+.footer-section {
+    margin-top: auto; // Pushes footer to the bottom
+    background-color: $dark-bg;
+    color: $light-text;
+    padding: 3rem 1rem; // More generous padding
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.4); // Shadow for separation from main content
+    text-align: center; // Default center alignment for mobile
+
+    .footer-content {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around; // Distribute items
+        align-items: flex-start;
+        gap: 2rem; // Space between footer columns
+        max-width: 1200px;
+        margin: 0 auto;
+        padding-bottom: 2rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2); // Subtle separator
+    }
+
+    .footer-brand, .footer-contact, .footer-links {
+        flex: 1 1 250px; // Flexible columns, min width 250px
+        margin-bottom: 1.5rem; // Space for smaller screens
+        text-align: left; // Default text alignment for sections
+
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: $primary-color;
+            margin-bottom: 0.8rem;
+            letter-spacing: 1px;
+            animation: fadeIn 1.2s ease-out forwards; // Fade in brand
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+        }
+        h3 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: $light-accent; // Accent color for subheadings
+            margin-bottom: 1rem;
+            position: relative;
+            &::after { // Underline for footer headings
+                content: '';
+                position: absolute;
+                left: 0;
+                bottom: -5px;
+                width: 40px;
+                height: 2px;
+                background-color: $light-accent;
+            }
+        }
+        p {
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+            color: $light-text;
+            a {
+                color: $light-text;
+                &:hover {
+                    color: $primary-color;
+                    text-decoration: underline;
+                }
+            }
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            li {
+                margin-bottom: 0.5rem;
+                a {
+                    color: $light-text;
+                    font-size: 0.95rem;
+                    &:hover {
+                        color: $primary-color;
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.footer-bottom {
+    padding-top: 1.5rem;
+    font-size: 0.85rem;
+    color: rgba($light-text, 0.7); // Slightly faded text
+    .development-status {
+        margin-top: 0.5rem;
+        font-style: italic;
+    }
+}
+
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 992px) {
+    .navbar-nav {
+        .nav-item {
+            margin: 0; // Remove horizontal margin for stacked links
+            .nav-link {
+                padding: 0.75rem 1rem; // Adjust padding for mobile links
+                &::after {
+                    width: 100%; // Ensure underline covers full width on mobile
+                }
+            }
+        }
+    }
+    .user-avatar {
+        margin-top: 10px; // Add some space above avatar when stacked
+    }
+
+    .footer-section {
+        .footer-content {
+            flex-direction: column; // Stack columns vertically
+            align-items: center; // Center items
+        }
+        .footer-brand, .footer-contact, .footer-links {
+            text-align: center; // Center text for all footer sections
+            width: 100%; // Take full width
+            h3::after {
+                left: 50%;
+                transform: translateX(-50%); // Center underline for mobile
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 0.6rem 1rem;
+    }
+    .navbar-brand {
+        font-size: 1.5rem;
+    }
+    // Removed main padding-top adjustment
+    .footer-section {
+        padding: 2rem 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar-brand {
+        font-size: 1.4rem;
+    }
+    .user-avatar {
+        width: 32px;
+        height: 32px;
+        font-size: 1rem;
+    }
+    .login-btn, .logout-btn {
+        padding: 0.3rem 1rem;
+        font-size: 0.9rem;
+    }
+    .footer-section {
+        .footer-brand h2 {
+            font-size: 1.6rem;
+        }
+        .footer-contact h3, .footer-links h3 {
+            font-size: 1.05rem;
+        }
+        .footer-contact p, .footer-links ul li a {
+            font-size: 0.9rem;
+        }
+    }
+}

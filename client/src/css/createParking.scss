@@ -1,0 +1,280 @@
+/* --- Variables --- */
+$primary-color: #007bff; // Your primary blue
+$secondary-color: #6c757d; // Dark Grey for general text
+$dark-blue-bg: #222e4c; // The deep blue from Spot-Savers/Login pages
+$light-grey-text: #adb5bd; // Lighter grey for subtle text on dark backgrounds
+$light-text-color: #ffffff; // White text for dark backgrounds and active elements
+
+$white-card-bg: #ffffff; // Background for the main content card
+$page-background: #f8f9fa; // Very light grey for the background outside the dark header
+
+$border-color: #e0e0e0; // Lighter border for inputs and general elements
+$shadow-main-card: 0 10px 25px rgba(0, 0, 0, 0.1); // Prominent shadow for the white card
+$shadow-input-focus: 0 0 0 0.25rem rgba($primary-color, 0.25); // Focus shadow for inputs
+$button-hover-shadow: 0 4px 10px rgba($primary-color, 0.2); // Shadow for primary button hover
+
+/* --- Global Spinner Animation (if not already present) --- */
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.animate-spinner {
+    animation: spin 1s linear infinite;
+}
+
+/* --- CREATE PARKING (EXISTING) STYLES - ASSUMED --- */
+// Assuming your existing createParking styles for the main container and card
+// are something like this, or you will adapt them.
+.container {
+    padding-top: 50px; // Adjust as needed
+    padding-bottom: 50px; // Adjust as needed
+}
+
+.create-parking-card {
+    background-color: $white-card-bg;
+    border-radius: 12px;
+    box-shadow: $shadow-main-card;
+    padding: 40px;
+    margin: 0 auto;
+    max-width: 700px; // Example max-width for the form card
+}
+
+
+/* ========================================= */
+/* --- BOOKING FORM STYLES (NEW SECTION) --- */
+/* ========================================= */
+
+.booking-form-page-wrapper {
+    min-height: 100vh;
+    background-color: $page-background;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.booking-form-header-background {
+    width: 100%;
+    min-height: 200px; // Consistent header height
+    background-color: $dark-blue-bg;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 20px;
+    box-sizing: border-box;
+    text-align: center; // Ensure title is centered
+}
+
+.booking-form-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: $light-text-color;
+    margin: 0; // Remove default margins
+    letter-spacing: -0.03em;
+}
+
+.booking-form-container {
+    width: 100%;
+    max-width: 700px; // Max width for the form card
+    margin-top: -80px; // Pull the white card up into the dark blue header
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    z-index: 1;
+    padding-left: 20px; // Add some horizontal padding for smaller screens
+    padding-right: 20px; // to prevent card from touching edges
+}
+
+.booking-form-card {
+    background-color: $white-card-bg;
+    border-radius: 12px;
+    box-shadow: $shadow-main-card;
+    padding: 40px; // Generous padding inside the card
+}
+
+.card-title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: $dark-blue-bg;
+    margin-bottom: 30px; // More space below title
+    text-align: center; // Center the card title
+}
+
+.form-section {
+    margin-bottom: 20px; // Space between form groups
+}
+
+.form-label {
+    display: block; // Ensure label is on its own line
+    font-size: 0.95rem;
+    font-weight: 500; // Slightly bolder labels
+    color: $dark-blue-bg; // Dark blue color for labels
+    margin-bottom: 8px; // Space between label and input
+}
+
+.form-input,
+.form-select-disabled {
+    width: 100%;
+    padding: 12px 15px; // Good padding for inputs
+    border: 1px solid $border-color;
+    border-radius: 8px; // Rounded input fields
+    font-size: 1rem;
+    color: $secondary-color; // Text color inside input
+    transition: all 0.3s ease; // Smooth transitions
+
+    &:focus {
+        outline: none;
+        border-color: $primary-color; // Blue border on focus
+        box-shadow: $shadow-input-focus; // Blue shadow on focus
+    }
+
+    &::placeholder {
+        color: lighten($secondary-color, 20%); // Lighter placeholder text
+    }
+}
+
+.form-select-disabled {
+    background-color: #f0f0f0; // Light grey background for disabled select
+    cursor: not-allowed; // Indicate it's disabled
+    color: lighten($secondary-color, 15%); // Slightly lighter text color
+}
+
+.space-details {
+    margin-top: 30px; // More space above space details
+    padding: 20px;
+    background-color: lighten($page-background, 2%); // Slightly different background for detail box
+    border-radius: 8px;
+    border: 1px solid lighten($border-color, 5%); // Subtle border
+    p {
+        margin-bottom: 8px; // Space between detail lines
+        font-size: 0.95rem;
+        color: $secondary-color;
+        &:last-child {
+            margin-bottom: 0;
+        }
+        strong {
+            color: $dark-blue-bg; // Bold details
+            font-weight: 600;
+        }
+    }
+    .text-muted {
+        color: $secondary-color; // Consistency
+        font-style: italic;
+        font-size: 0.9rem;
+        margin-top: 5px;
+    }
+}
+
+
+.submit-button {
+    width: 100%;
+    padding: 14px 25px; // Larger padding for button
+    background-color: $primary-color; // Primary blue background
+    color: $light-text-color;
+    border: none;
+    border-radius: 8px; // Rounded button
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px; // Space between text and spinner
+    margin-top: 30px; // Space above button
+
+    &:hover:not(:disabled) {
+        background-color: darken($primary-color, 8%); // Darken on hover
+        box-shadow: $button-hover-shadow; // Add shadow on hover
+    }
+
+    &:disabled {
+        background-color: lighten($primary-color, 20%); // Lighter when disabled
+        cursor: not-allowed;
+        opacity: 0.7; // Slightly transparent
+    }
+
+    .animate-spinner {
+        width: 20px;
+        height: 20px;
+        circle {
+            stroke: $light-text-color; // Spinner color matches button text
+        }
+        path {
+            fill: $light-text-color; // Spinner color matches button text
+        }
+    }
+}
+
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 768px) {
+    .booking-form-header-background {
+        min-height: 150px;
+        padding: 40px 15px;
+    }
+    .booking-form-title {
+        font-size: 2.5rem;
+    }
+    .booking-form-container {
+        margin-top: -60px;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    .booking-form-card {
+        padding: 30px;
+    }
+    .card-title {
+        font-size: 1.8rem;
+        margin-bottom: 25px;
+    }
+    .form-input, .form-select-disabled {
+        padding: 10px 12px;
+        font-size: 0.95rem;
+    }
+    .submit-button {
+        padding: 12px 20px;
+        font-size: 1rem;
+    }
+    .space-details p {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .booking-form-header-background {
+        min-height: 120px;
+        padding: 30px 10px;
+    }
+    .booking-form-title {
+        font-size: 2rem;
+    }
+    .booking-form-container {
+        margin-top: -50px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    .booking-form-card {
+        padding: 20px;
+        border-radius: 8px;
+    }
+    .card-title {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+    }
+    .form-section {
+        margin-bottom: 15px;
+    }
+    .form-label {
+        font-size: 0.9rem;
+        margin-bottom: 5px;
+    }
+    .form-input, .form-select-disabled {
+        padding: 8px 10px;
+        font-size: 0.9rem;
+    }
+    .submit-button {
+        padding: 10px 15px;
+        font-size: 0.95rem;
+        margin-top: 25px;
+    }
+}

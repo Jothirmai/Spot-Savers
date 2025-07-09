@@ -1,0 +1,430 @@
+/* --- Variables --- */
+$primary-blue: #007bff; // Bright blue for button and links
+$dark-panel-bg: #222e4c; // The deep blue for the left panel (large screen)
+
+// Colors specifically for the small device branding panel
+$mobile-logo-color: #c0c29f; // Muted yellowish-green for mobile logo
+$mobile-tagline-color: #a3a58e; // Slightly darker muted yellowish-green for mobile tagline
+
+$white-card-bg: #ffffff; // Background for the right panel/card
+$page-background: #f8f9fa; // Very light grey for the overall page background
+$light-text-color:white;
+
+$text-dark: #343a40; // General dark text, almost black for headings
+$text-medium: #6c757d; // Medium grey for body text, placeholders
+$text-light: #adb5bd; // Lighter grey for subtle text
+
+$border-color-light: #e0e0e0; // Light border for inputs
+
+$shadow-base: rgba(0, 0, 0, 0.1); // Base shadow color
+$shadow-strong: 0 10px 30px $shadow-base; // Stronger shadow for the card
+$shadow-input-focus: rgba($primary-blue, 0.25); // Blue shadow on input focus
+
+/* --- Global Spinner Animation --- */
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.animate-spinner {
+    animation: spin 1s linear infinite;
+}
+
+/* --- Auth Page Layout (Base Styles - For Larger Devices: > 991.98px) --- */
+.auth-page-wrapper {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $page-background;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.auth-container {
+    width: 100%;
+    max-width: 1000px;
+    margin: auto;
+}
+
+.login-card {
+    display: flex; /* Side-by-side panels for large screens */
+    background-color: $white-card-bg;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: $shadow-strong;
+    min-height: 500px;
+}
+
+/* --- Left Panel (Branding/Marketing) (Base Styles - For Large Screens) --- */
+.login-left-panel {
+    flex: 1;
+    background-color: $dark-panel-bg; /* Dark blue background */
+    color: $light-text-color; /* White text */
+    padding: 60px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.login-brand-logo {
+    font-family: 'Poppins', sans-serif;
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    letter-spacing: -0.05em;
+    color: #e0e0e0; /* Off-white/light grey color for large screen logo */
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+}
+
+.login-tagline {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    max-width: 400px;
+    color: rgba($light-text-color, 0.7); /* Slightly transparent white for large screen tagline */
+}
+
+/* --- Right Panel (Login Form) (Base Styles - For Large Screens) --- */
+.login-right-panel {
+    flex: 1;
+    padding: 50px 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+}
+
+.card-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: $text-dark;
+    margin-bottom: 10px;
+    text-align: left; /* Aligned left for large screen */
+}
+
+.card-subtitle {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.05rem;
+    color: $text-medium;
+    margin-bottom: 40px;
+    text-align: left; /* Aligned left for large screen */
+}
+
+/* --- Form Group Styling (Base Styles) --- */
+.form-group {
+    margin-bottom: 25px;
+    label {
+        font-family: 'Inter', sans-serif;
+        display: block;
+        margin-bottom: 10px;
+        font-size: 0.95rem;
+        font-weight: 500;
+        color: $text-dark;
+    }
+}
+
+.input-with-icon {
+    position: relative;
+    .form-control {
+        font-family: 'Inter', sans-serif;
+        width: 100%;
+        padding: 14px 15px 14px 50px;
+        border: 1px solid $border-color-light;
+        border-radius: 8px;
+        font-size: 1rem;
+        color: $text-dark;
+        transition: all 0.3s ease;
+        background-color: $white-card-bg;
+
+        &:focus {
+            outline: none;
+            border-color: $primary-blue;
+            box-shadow: 0 0 0 0.25rem $shadow-input-focus;
+        }
+        &::placeholder {
+            color: $text-light;
+        }
+    }
+    .input-icon {
+        position: absolute;
+        left: 18px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 20px;
+        height: 20px;
+        color: $text-medium;
+    }
+}
+
+.password-toggle {
+    .password-input {
+        padding-right: 60px;
+    }
+    .password-eye-icon {
+        position: absolute;
+        right: 18px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        color: $text-medium;
+        svg {
+            width: 20px;
+            height: 20px;
+        }
+    }
+}
+
+/* --- Login Button (Base Styles) --- */
+.login-btn {
+    width: 100%;
+    padding: 16px 20px;
+    background-color: $primary-blue;
+    color: $light-text-color;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 30px;
+
+    &:hover:not(:disabled) {
+        background-color: darken($primary-blue, 8%);
+        box-shadow: 0 6px 15px rgba($primary-blue, 0.3);
+    }
+
+    &:disabled {
+        background-color: lighten($primary-blue, 25%);
+        cursor: not-allowed;
+        opacity: 0.8;
+    }
+
+    .spinner-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        span {
+            color: $light-text-color;
+        }
+        .animate-spinner {
+            width: 24px;
+            height: 24px;
+            circle {
+                stroke: $light-text-color;
+            }
+            path {
+                fill: $light-text-color;
+            }
+        }
+    }
+}
+
+/* --- Register Link (Base Styles) --- */
+.new-user-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    color: $text-medium;
+    margin-top: 30px;
+    text-align: center;
+    .register-link {
+        color: $primary-blue;
+        text-decoration: none;
+        font-weight: 600;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+/* ==================================== */
+/* --- RESPONSIVENESS MEDIA QUERIES --- */
+/* (FOR SMALLER DEVICES, MATCHING IMAGE_AC4D59.PNG) */
+/* ==================================== */
+
+// Tablet and smaller devices (max-width: 991.98px)
+@media (max-width: 991.98px) {
+    .auth-container {
+        max-width: 600px;
+    }
+    .login-card {
+        flex-direction: column; /* Stack panels vertically */
+        min-height: auto; /* Allow height to adjust to content */
+        border-radius: 12px; /* Ensure overall card maintains border radius */
+    }
+    .login-left-panel {
+        padding: 50px 30px; /* Adjust padding for stacked layout, from image */
+        border-bottom: none; /* No separator line if the card is one unit */
+        
+        /* Specific colors for mobile branding panel as per image_ac4d59.png */
+        background-color: $dark-panel-bg; /* Keep dark background */
+
+        .login-brand-logo {
+            font-size: 3rem;
+            color: $mobile-logo-color; /* Muted yellowish-green for mobile logo */
+        }
+        .login-tagline {
+            font-size: 1.1rem;
+            color: $mobile-tagline-color; /* Slightly darker muted yellowish-green for mobile tagline */
+            max-width: 90%; /* Allow tagline to spread more on smaller screens */
+        }
+    }
+    .login-right-panel {
+        padding: 40px 30px; /* Adjust padding for form */
+    }
+    .card-title {
+        font-size: 2.2rem; /* Adjusted for image */
+        text-align: center; /* Centered for smaller screens */
+    }
+    .card-subtitle {
+        font-size: 1rem; /* Adjusted for image */
+        text-align: center; /* Centered for smaller screens */
+        margin-bottom: 30px; /* More space below subtitle */
+    }
+    .form-group {
+        margin-bottom: 20px;
+    }
+    .input-with-icon .form-control {
+        padding: 12px 15px 12px 45px;
+        font-size: 0.95rem;
+    }
+    .input-with-icon .input-icon,
+    .password-toggle .password-eye-icon svg {
+        width: 18px;
+        height: 18px;
+        left: 15px;
+    }
+    .password-toggle .password-eye-icon {
+        right: 15px;
+    }
+    .login-btn {
+        padding: 14px 18px;
+        font-size: 1.1rem;
+    }
+    .new-user-text {
+        font-size: 0.95rem;
+        margin-top: 25px;
+    }
+}
+
+// Mobile devices (max-width: 767.98px)
+@media (max-width: 767.98px) {
+    .auth-page-wrapper {
+        padding: 15px;
+    }
+    .auth-container {
+        max-width: 450px;
+    }
+    .login-card {
+        border-radius: 10px; /* Slightly less rounded for phones */
+        box-shadow: 0 5px 15px $shadow-base;
+    }
+    .login-left-panel {
+        padding: 40px 25px; /* Further adjust padding */
+        .login-brand-logo {
+            font-size: 2.8rem;
+        }
+        .login-tagline {
+            font-size: 0.95rem;
+            max-width: 90%;
+        }
+    }
+    .login-right-panel {
+        padding: 35px 25px;
+    }
+    .card-title {
+        font-size: 2rem;
+    }
+    .card-subtitle {
+        font-size: 0.9rem;
+        margin-bottom: 25px;
+    }
+    .form-group {
+        margin-bottom: 18px;
+    }
+    .input-with-icon .form-control {
+        padding: 10px 12px 10px 40px;
+        font-size: 0.88rem;
+    }
+    .input-with-icon .input-icon,
+    .password-toggle .password-eye-icon svg {
+        width: 16px;
+        height: 16px;
+        left: 12px;
+    }
+    .password-toggle .password-eye-icon {
+        right: 12px;
+    }
+    .login-btn {
+        padding: 12px 15px;
+        font-size: 1rem;
+    }
+    .new-user-text {
+        font-size: 0.9rem;
+        margin-top: 20px;
+    }
+}
+
+// Extra small devices (max-width: 575.98px)
+@media (max-width: 575.98px) {
+    .auth-page-wrapper {
+        padding: 10px;
+    }
+    .auth-container {
+        max-width: 95%; /* Allow it to be almost full width */
+    }
+    .login-card {
+        border-radius: 8px; /* Smallest border radius */
+        box-shadow: 0 2px 10px $shadow-base; /* Lightest shadow */
+    }
+    .login-left-panel {
+        padding: 30px 20px;
+        .login-brand-logo {
+            font-size: 2.4rem;
+        }
+        .login-tagline {
+            font-size: 0.85rem;
+            max-width: 90%;
+        }
+    }
+    .login-right-panel {
+        padding: 30px 20px;
+    }
+    .card-title {
+        font-size: 1.8rem;
+    }
+    .card-subtitle {
+        font-size: 0.8rem;
+        margin-bottom: 20px;
+    }
+    .form-group {
+        margin-bottom: 15px;
+    }
+    .input-with-icon .form-control {
+        padding: 8px 10px 8px 35px;
+        font-size: 0.8rem;
+    }
+    .input-with-icon .input-icon,
+    .password-toggle .password-eye-icon svg {
+        width: 14px;
+        height: 14px;
+        left: 10px;
+    }
+    .password-toggle .password-eye-icon {
+        right: 10px;
+    }
+    .login-btn {
+        padding: 10px 12px;
+        font-size: 0.9rem;
+    }
+    .new-user-text {
+        font-size: 0.8rem;
+        margin-top: 15px;
+    }
+}

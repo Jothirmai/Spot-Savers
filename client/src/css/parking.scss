@@ -1,0 +1,12 @@
+h1{
+    font-weight: lighter;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spinner {
+  animation: spin 1s linear infinite;
+}
