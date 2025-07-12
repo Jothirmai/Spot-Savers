@@ -15,13 +15,14 @@ const Layout = () => {
     };
 
     useEffect(() => {
-        if (!user && location.pathname !== '/' && location.pathname !== '/about' && location.pathname !== '/login') {
+        if (!user && !['/', '/about', '/login'].includes(location.pathname)) {
             navigate('/login');
         }
     }, [user, location, navigate]);
 
     return (
         <div className="main-container">
+            {/* Navbar */}
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-3">
                 <div className="container-fluid">
                     <Link className="navbar-brand" to="/">Spot-Savers</Link>
@@ -93,10 +94,24 @@ const Layout = () => {
                 <Outlet />
             </main>
 
-            <footer className="footer-section bg-dark text-light py-3 mt-5">
-                <div className="container d-flex flex-column flex-md-row justify-content-between align-items-center small">
-                    <p className="mb-1">© {new Date().getFullYear()} Spot-Savers</p>
-                    <p className="mb-0">Still under development</p>
+            {/* Footer */}
+            <footer className="footer-section bg-dark text-light mt-5 pt-4 pb-2">
+                <div className="container d-flex flex-column flex-md-row justify-content-between text-center text-md-start gap-4 mb-3">
+                    <div>
+                        <h5>Spot-Savers</h5>
+                        <p className="small mb-1">Find or list parking spots with ease.</p>
+                    </div>
+
+                    <div>
+                        <h6>Contact Us</h6>
+                        <p className="mb-1">📧 <a href="mailto:support@spot-savers.com" className="text-light text-decoration-none">support@spot-savers.com</a></p>
+                        <p>📞 <a href="tel:+441234567890" className="text-light text-decoration-none">+44-12345-67890</a></p>
+                    </div>
+                </div>
+
+                <div className="text-center border-top pt-2 small">
+                    <p className="mb-0">&copy; {new Date().getFullYear()} Spot-Savers. All rights reserved.</p>
+                    <p className="mb-0">🚧 This website is still under development.</p>
                 </div>
             </footer>
         </div>
