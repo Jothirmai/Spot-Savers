@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Outlet, Link, useNavigate, useLocation } from "react-router-dom";
 import { clearUser } from "../reducers/userReducer";
-import '../css/layout.scss'; // Ensure this path is correct
+import '../css/layout.scss';
 
 const Layout = () => {
     const user = useSelector((state) => state.user);
@@ -22,12 +22,13 @@ const Layout = () => {
 
     return (
         <div className="main-container">
-            <nav className="navbar navbar-expand-lg navbar-dark animated-navbar"> {/* Removed fixed-top */}
-                <div className="container">
-                    <Link className="navbar-brand animate__animated animate__fadeInLeft" to="/">Spot-Savers</Link>
-                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-3">
+                <div className="container-fluid">
+                    <Link className="navbar-brand" to="/">Spot-Savers</Link>
+                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown">
                         <span className="navbar-toggler-icon"></span>
                     </button>
+
                     <div className="collapse navbar-collapse" id="navbarNavDropdown">
                         <ul className="navbar-nav ms-auto align-items-center">
                             <li className="nav-item">
@@ -36,84 +37,66 @@ const Layout = () => {
                             <li className="nav-item">
                                 <Link className={`nav-link ${location.pathname === '/about' ? 'active' : ''}`} to='/about'>About</Link>
                             </li>
-                            <li className="nav-item">
-                                <Link className={`nav-link ${location.pathname === '/parking' ? 'active' : ''}`} to='/parking'>Parking</Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className={`nav-link ${location.pathname === '/space' ? 'active' : ''}`} to='/space'>Spaces</Link>
-                            </li>
-                            {user?.type !== "seeker" &&
+
+                            {user && (
                                 <>
                                     <li className="nav-item">
-                                        <Link className={`nav-link ${location.pathname === '/parkingForm' ? 'active' : ''}`} to='/parkingForm'>Create Parking</Link>
+                                        <Link className={`nav-link ${location.pathname === '/parking' ? 'active' : ''}`} to='/parking'>Parking</Link>
                                     </li>
                                     <li className="nav-item">
-                                        <Link className={`nav-link ${location.pathname === '/spaceForm' ? 'active' : ''}`} to='/spaceForm'>Create Space</Link>
+                                        <Link className={`nav-link ${location.pathname === '/space' ? 'active' : ''}`} to='/space'>Spaces</Link>
                                     </li>
-                                </>
-                            }
-                            <li className="nav-item">
-                                <Link className={`nav-link ${location.pathname === '/booking' ? 'active' : ''}`} to='/booking'>Bookings</Link>
-                            </li>
-                            {user?.type === "admin" &&
-                                <>
+
+                                    {user?.type !== "seeker" && (
+                                        <>
+                                            <li className="nav-item">
+                                                <Link className={`nav-link ${location.pathname === '/parkingForm' ? 'active' : ''}`} to='/parkingForm'>Create Parking</Link>
+                                            </li>
+                                            <li className="nav-item">
+                                                <Link className={`nav-link ${location.pathname === '/spaceForm' ? 'active' : ''}`} to='/spaceForm'>Create Space</Link>
+                                            </li>
+                                        </>
+                                    )}
+
                                     <li className="nav-item">
-                                        <Link className={`nav-link ${location.pathname === '/users' ? 'active' : ''}`} to='/users'>Users</Link>
+                                        <Link className={`nav-link ${location.pathname === '/booking' ? 'active' : ''}`} to='/booking'>Bookings</Link>
                                     </li>
-                                </>
-                            }
-                            {user ?
-                                <>
+
+                                    {user?.type === "admin" && (
+                                        <li className="nav-item">
+                                            <Link className={`nav-link ${location.pathname === '/users' ? 'active' : ''}`} to='/users'>Users</Link>
+                                        </li>
+                                    )}
+
                                     <li className="nav-item ms-lg-2">
                                         <Link className="nav-link profile-avatar-link" to='/profile'>
-                                            <div className="user-avatar">{user?.name && user.name.charAt(0).toUpperCase()}</div>
+                                            <div className="user-avatar">{user?.name?.charAt(0).toUpperCase()}</div>
                                         </Link>
                                     </li>
                                     <li className="nav-item ms-lg-2">
-                                        <button className="btn btn-primary logout-btn" onClick={handleLogout}>Logout</button>
+                                        <button className="btn btn-sm btn-outline-light" onClick={handleLogout}>Logout</button>
                                     </li>
                                 </>
-                                :
+                            )}
+
+                            {!user && (
                                 <li className="nav-item ms-lg-2">
-                                    <Link className="btn btn-primary login-btn" to='/login'>Login</Link>
+                                    <Link className="btn btn-sm btn-outline-light" to='/login'>Login</Link>
                                 </li>
-                            }
+                            )}
                         </ul>
                     </div>
                 </div>
             </nav>
 
-            <main> {/* Removed paddingTop style */}
+            <main>
                 <Outlet />
             </main>
 
-            <footer className="footer-section">
-                <div className="container footer-content">
-                    <div className="footer-brand">
-                        <h2>Spot-Savers</h2>
-                        <p>Your ultimate destination to find or list parking spots efficiently.</p>
-                    </div>
-
-                    <div className="footer-contact">
-                        <h3>Contact Us</h3>
-                        <p>Email: <a href="mailto:support@Spot-Savers.com">support@Spot-Savers.com</a></p>
-                        <p>Phone: <a href="tel:+441234567890">+44-12345-67890</a></p>
-                    </div>
-
-                    <div className="footer-links">
-                        <h3>Quick Links</h3>
-                        <ul>
-                            <li><Link to="/">Home</Link></li>
-                            <li><Link to="/about">About</Link></li>
-                            <li><Link to="/parking">Parking</Link></li>
-                            <li><Link to="/booking">Bookings</Link></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div className="footer-bottom">
-                    <p>&copy; {new Date().getFullYear()} Spot-Savers. All rights reserved.</p>
-                    <p className="development-status">This website is still under development.</p>
+            <footer className="footer-section bg-dark text-light py-3 mt-5">
+                <div className="container d-flex flex-column flex-md-row justify-content-between align-items-center small">
+                    <p className="mb-1">© {new Date().getFullYear()} Spot-Savers</p>
+                    <p className="mb-0">Still under development</p>
                 </div>
             </footer>
         </div>
