@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { resetPassword, updateUser } from '../api/api';
-import { setUser } from '../reducers/userReducer';
+import { useSelector } from 'react-redux';
+import { resetPassword } from '../api/api';
 import { toast } from 'react-toastify';
 import '../css/createParking.scss';
 
@@ -31,72 +30,36 @@ const spinnerSVG = (
 );
 
 const Profile = () => {
-  const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
 
   const [form, setForm] = useState({
     name: '',
     email: '',
-    password: '',
-    confirmPassword: '',
     type: '',
-    cash: false,
-    upiID: ''
+    password: '',
+    confirmPassword: ''
   });
 
-  const [loadingUpdate, setLoadingUpdate] = useState(false);
   const [loadingReset, setLoadingReset] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleFormChange = ({ key, value }) => {
     setForm(prev => ({ ...prev, [key]: value }));
   };
 
-  const handleUpdateUserPassword = () => {
-    if (form.cash === user.cash && form.upiID === user.upiID) {
-      toast.info("No changes to update");
-      return;
-    }
-
-    setLoadingUpdate(true);
-    const body = { cash: form.cash, upiID: form.upiID };
-
-    updateUser({
-      user_id: user?._id,
-      body,
-      handleUpdateUserSuccess,
-      handleUpdateUserFailure
-    });
-  };
-
-  const handleUpdateUserSuccess = (data) => {
-    dispatch(setUser({ ...user, ...data?.user }));
-    toast.success("Profile updated successfully");
-    setLoadingUpdate(false);
-  };
-
-  const handleUpdateUserFailure = (error) => {
-    toast.error(error || "Update failed");
-    setLoadingUpdate(false);
-  };
-
   const handleResetPassword = () => {
     setLoadingReset(true);
 
-    if (form?.password !== form?.confirmPassword) {
+    if (form.password !== form.confirmPassword) {
       toast.error("Passwords do not match");
       setLoadingReset(false);
       return;
     }
 
-    const body = {
-      password: form.password,
-      cash: form.cash,
-      upiID: form.upiID
-    };
-
     resetPassword({
       user_id: user?._id,
-      body,
+      body: { password: form.password },
       handleResetPasswordSuccess,
       handleResetPasswordFailure
     });
@@ -118,8 +81,6 @@ const Profile = () => {
       name: user?.name || '',
       email: user?.email || '',
       type: user?.type || '',
-      cash: user?.cash || false,
-      upiID: user?.upiID || '',
       password: '',
       confirmPassword: ''
     });
@@ -132,73 +93,57 @@ const Profile = () => {
 
         <div className="mb-3">
           <label htmlFor="name" className="form-label">Name</label>
-          <input type="text" className="form-control" id="name" value={form?.name} disabled />
+          <input type="text" className="form-control" id="name" value={form.name} disabled />
         </div>
         <div className="mb-3">
           <label htmlFor="email" className="form-label">Email</label>
-          <input type="text" className="form-control" id="email" value={form?.email} disabled />
+          <input type="text" className="form-control" id="email" value={form.email} disabled />
         </div>
         <div className="mb-3">
           <label htmlFor="type" className="form-label">Type</label>
-          <input type="text" className="form-control" id="type" value={form?.type} disabled />
+          <input type="text" className="form-control" id="type" value={form.type} disabled />
         </div>
 
-        {user?.type === 'owner' &&
-          <>
-            <div className="mb-3 d-flex justify-content-between align-items-center">
-              <label className="form-check-label" htmlFor="cashCheck">Accepts cash</label>
-              <input
-                className="form-check-input"
-                type="checkbox"
-                id="cashCheck"
-                checked={form?.cash}
-                onChange={(e) => handleFormChange({ key: 'cash', value: e.target.checked })}
-              />
-            </div>
+        <h3 className='mt-4'>Change Password</h3>
 
-            <div className="mb-3">
-              <label htmlFor="upiID" className="form-label">upiID</label>
-              <input
-                type="text"
-                className="form-control"
-                id="upiID"
-                value={form?.upiID}
-                onChange={(e) => handleFormChange({ key: 'upiID', value: e.target.value })}
-              />
-            </div>
-          </>
-        }
-
-        <button
-          type="submit"
-          className="btn btn-primary mt-4 mb-4 d-flex align-items-center justify-content-center"
-          onClick={handleUpdateUserPassword}
-          disabled={loadingUpdate}
-        >
-          {loadingUpdate ? spinnerSVG : 'Update'}
-        </button>
-
-        <h3 className='mt-3'>Change Password</h3>
-        <div className="mb-3">
+        <div className="mb-3 position-relative">
           <label htmlFor="password" className="form-label">New Password</label>
           <input
-            type="password"
+            type={showPassword ? "text" : "password"}
             className="form-control"
             id="password"
-            value={form?.password}
+            value={form.password}
             onChange={(e) => handleFormChange({ key: 'password', value: e.target.value })}
           />
+          <button
+            type="button"
+            className="btn btn-sm btn-light position-absolute top-50 end-0 translate-middle-y me-2"
+            onClick={() => setShowPassword(prev => !prev)}
+            style={{ zIndex: 2 }}
+          >
+            {showPassword ? "🙈" : "👁️"}
+          </button>
         </div>
-        <div className="mb-3">
+
+        <div className="mb-3 position-relative">
           <label htmlFor="confirmPassword" className="form-label">Confirm Password</label>
           <input
-            type="password"
+            type={showConfirmPassword ? "text" : "password"}
             className="form-control"
             id="confirmPassword"
-            value={form?.confirmPassword}
+            value={form.confirmPassword}
             onChange={(e) => handleFormChange({ key: 'confirmPassword', value: e.target.value })}
           />
+          <button
+            type="button"
+            className="btn btn-sm btn-light position-absolute top-50 end-0 translate-middle-y me-2"
+            onClick={() => setShowConfirmPassword(prev => !prev)}
+            style={{ zIndex: 2 }}
+          >
+            {showConfirmPassword ? "🙈" : "👁️"}
+          </button>
         </div>
+
         <button
           type="submit"
           className="btn btn-primary mt-4 d-flex align-items-center justify-content-center"
