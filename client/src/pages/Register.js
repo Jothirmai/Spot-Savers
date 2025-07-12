@@ -50,7 +50,7 @@ const Register = () => {
 
             <form onSubmit={handleRegister}>
               <div className="mb-3 form-group">
-                <label htmlFor="name">🙍‍♂️ Full Name</label>
+                <label htmlFor="name">Full Name</label>
                 <div className="input-with-icon">
                   <input
                     type="text"
@@ -65,7 +65,7 @@ const Register = () => {
               </div>
 
               <div className="mb-3 form-group">
-                <label htmlFor="email">📧 Email Address</label>
+                <label htmlFor="email">Email Address</label>
                 <div className="input-with-icon">
                   <input
                     type="email"
@@ -80,7 +80,7 @@ const Register = () => {
               </div>
 
               <div className="mb-3 form-group">
-                <label htmlFor="password">🔒 Password</label>
+                <label htmlFor="password">Password</label>
                 <div className="input-with-icon password-toggle">
                   <input
                     type={showPassword ? 'text' : 'password'}
@@ -93,7 +93,7 @@ const Register = () => {
                   />
                   <button
                     type="button"
-                    className="btn btn-sm btn-light password-eye-icon"
+                    className="password-eye-icon"
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? '🙈' : '👁️'}

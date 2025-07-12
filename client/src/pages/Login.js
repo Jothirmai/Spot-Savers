@@ -83,7 +83,7 @@ const Login = () => {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="btn btn-sm btn-light position-absolute top-50 end-0 translate-middle-y me-2"
+                  className="password-eye-icon"
                   style={{ zIndex: 2 }}
                 >
                   {showPassword ? '🙈' : '👁️'}

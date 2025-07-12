@@ -136,7 +136,7 @@ const Profile = () => {
           />
           <button
             type="button"
-            className="btn btn-sm btn-light position-absolute top-50 end-0 translate-middle-y me-2"
+            className="password-eye-icon"
             onClick={() => setShowConfirmPassword(prev => !prev)}
             style={{ zIndex: 2 }}
           >
@@ -146,7 +146,7 @@ const Profile = () => {
 
         <button
           type="submit"
-          className="password-eye-icon"
+          className="btn btn-primary mt-4 d-flex align-items-center justify-content-center"
           onClick={handleResetPassword}
           disabled={loadingReset}
         >
