@@ -182,7 +182,7 @@ main {
         margin-bottom: 1.5rem; // Space for smaller screens
         text-align: left; // Default text alignment for sections
 
-        h2 {
+        h5 {
             font-size: 1.8rem;
             font-weight: 700;
             color: $primary-color;
@@ -194,7 +194,7 @@ main {
                 to { opacity: 1; transform: translateY(0); }
             }
         }
-        h3 {
+        h6 {
             font-size: 1.15rem;
             font-weight: 600;
             color: $light-accent; // Accent color for subheadings
@@ -312,10 +312,10 @@ main {
         font-size: 0.9rem;
     }
     .footer-section {
-        .footer-brand h2 {
+        .footer-brand h5 {
             font-size: 1.6rem;
         }
-        .footer-contact h3, .footer-links h3 {
+        .footer-contact h6, .footer-links h6 {
             font-size: 1.05rem;
         }
         .footer-contact p, .footer-links ul li a {
