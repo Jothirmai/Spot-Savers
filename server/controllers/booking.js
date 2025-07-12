@@ -42,23 +42,31 @@ bookingRouter.post("/", async (req, res) => {
 
 // Get existing booking list
 bookingRouter.get("/", async (req, res) => {
-    try {
-        const { user_id, owner_id } = req.query;
-        if (user_id) {
-            const booking = await Booking.find({ user_id }).populate({ path: 'space_id', populate: { path: 'parking_id' } });
+  try {
+    const { user_id, owner_id } = req.query;
+    let query = {};
 
-            return res.json(booking);
-        }
-        let booking = await Booking.find({}).populate({ path: 'space_id', populate: { path: 'parking_id' } });
-        if (owner_id) {
-            booking = booking.filter((item) => item?.space_id?.parking_id?.user_id.equals(owner_id))
-        }
+    if (user_id) query.user_id = user_id;
 
-        res.json(booking);
-    } catch (error) {
-        res.status(400).json({ error });
+    let booking = await Booking.find(query)
+      .populate({
+        path: 'space_id',
+        populate: { path: 'parking_id' },
+      })
+      .populate('user_id');
+
+    if (owner_id) {
+      booking = booking.filter((item) =>
+        item?.space_id?.parking_id?.user_id?.equals(owner_id)
+      );
     }
+
+    res.json(booking);
+  } catch (error) {
+    res.status(400).json({ error });
+  }
 });
+
 
 // Update booking
 bookingRouter.put("/:id", async (req, res) => {

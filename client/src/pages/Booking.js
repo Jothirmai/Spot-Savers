@@ -90,7 +90,7 @@ const Booking = () => {
                 className="btn btn-outline-primary"
                 onClick={() => proceedToPayment(item)}
               >
-                Proceed with Payment
+                Get Invoice
               </button>
             ) : item?.confirm_booking === 'pending' ? (
               <button className='btn btn-outline-danger ms-2' onClick={() => handleDelete(item)}>
