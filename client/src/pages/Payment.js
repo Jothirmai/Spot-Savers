@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-const Payment = () => {
+const Invoice = () => {
   const { state } = useLocation();
   const booking = state?.booking;
   const space = booking?.space_id;
 
-  const [duration, setDuration] = useState({ hours: 0, mins: 0 });
+  const [hours, setHours] = useState(0);
 
   useEffect(() => {
     if (space?.slot_start_time && space?.slot_end_time) {
-      setDuration(calculateDuration(space.slot_start_time, space.slot_end_time));
+      const durationHours = calculateDurationHours(space.slot_start_time, space.slot_end_time);
+      setHours(durationHours);
     }
   }, [space]);
 
-  const calculateDuration = (start, end) => {
+  const calculateDurationHours = (start, end) => {
     const toMinutes = (timeStr) => {
       const [time, modifier] = timeStr.split(/(?=[ap]m)/);
       let [h, m] = time.split(':').map(Number);
@@ -27,47 +28,69 @@ const Payment = () => {
     const endMin = toMinutes(end);
     const diff = endMin - startMin;
 
-    const hours = Math.floor(diff / 60);
-    const mins = diff % 60;
-    return { hours, mins };
+    return Math.floor(diff / 60);
   };
 
   return (
-    <div className="container mt-5" style={{ color: '#000' }}>
-      <div className="border p-4 shadow-sm rounded">
-        <h2 className="mb-4 text-center">Parking Invoice</h2>
+    <div className="container mt-4" style={{ color: 'black', fontFamily: 'Arial, sans-serif' }}>
+      <div className="card shadow-sm p-4">
+        <h2 className="text-center fw-bold mb-4">Parking Invoice</h2>
 
-        <p><strong>Seeker Name:</strong> {booking?.user_id?.name}</p>
-        <p><strong>Email:</strong> {booking?.user_id?.email}</p>
-
-        <hr />
-
-        <p><strong>Vehicle:</strong> {booking?.vehicle_company} {booking?.vehicle_model} ({booking?.car_color})</p>
-        <p><strong>Plate Number:</strong> {booking?.plate_number}</p>
+        <div className="mb-3">
+          <p className="mb-1"><strong>Seeker Name:</strong> {booking?.user_id?.name || "N/A"}</p>
+        </div>
 
         <hr />
 
-        <p><strong>Date:</strong> {space?.date ? new Date(space.date).toLocaleDateString() : 'N/A'}</p>
-        <p><strong>Time Slot:</strong> {space?.slot_start_time} - {space?.slot_end_time}</p>
-        <p><strong>Duration:</strong> {duration.hours} hr {duration.mins} min</p>
-
-        <p><strong>Rate:</strong> ₹{space?.price}</p>
-        <p><strong>Total:</strong> ₹{space?.price}</p>
+        <div className="row mb-3">
+          <div className="col-sm-12 col-md-6">
+            <p><strong>Vehicle:</strong> {booking?.vehicle_company} {booking?.vehicle_model} ({booking?.car_color})</p>
+          </div>
+          <div className="col-sm-12 col-md-6">
+            <p><strong>Plate Number:</strong> {booking?.plate_number}</p>
+          </div>
+        </div>
 
         <hr />
 
-        <p><strong>Space:</strong> {space?.name}</p>
-        <p><strong>Parking Location:</strong> {space?.parking_id?.name}</p>
-        <p><strong>Owner:</strong> {space?.parking_id?.user_id?.name}</p>
+        <div className="row mb-3">
+          <div className="col-sm-12 col-md-6">
+            <p><strong>Date:</strong> {space?.date ? new Date(space.date).toLocaleDateString() : 'N/A'}</p>
+            <p><strong>Time Slot:</strong> {space?.slot_start_time} - {space?.slot_end_time}</p>
+            <p><strong>Duration:</strong> {hours} hr</p>
+          </div>
+          <div className="col-sm-12 col-md-6">
+            <p><strong>Rate (per booking):</strong> ₹{space?.price}</p>
+          </div>
+        </div>
 
-        <hr className="my-4" />
+        <hr />
 
-        <p className="fw-bold mt-3" style={{ fontSize: '1.1rem' }}>
-          Please show this invoice to the parking owner at the entrance for verification.
-        </p>
+        <div className="row mb-3">
+          <div className="col-sm-12 col-md-6">
+            <p><strong>Space:</strong> {space?.name}</p>
+          </div>
+          <div className="col-sm-12 col-md-6">
+            <p><strong>Parking Location:</strong> {space?.parking_id?.name}</p>
+          </div>
+        </div>
+
+        <hr />
+
+        <div className="d-flex justify-content-end mb-4">
+          <p style={{ fontSize: '1.25rem' }}><strong>Total: ₹{space?.price}</strong></p>
+        </div>
+
+        <hr />
+
+        <div className="text-center mt-3">
+          <p className="fw-bold" style={{ fontSize: '1rem' }}>
+            Please show this invoice to the parking owner at the entrance for verification.
+          </p>
+        </div>
       </div>
     </div>
   );
 };
 
-export default Payment;
+export default Invoice;
