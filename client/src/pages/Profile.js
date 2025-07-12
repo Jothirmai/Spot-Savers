@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { resetPassword } from '../api/api';
 import { toast } from 'react-toastify';
 import '../css/createParking.scss';
@@ -41,8 +41,6 @@ const Profile = () => {
   });
 
   const [loadingReset, setLoadingReset] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleFormChange = ({ key, value }) => {
     setForm(prev => ({ ...prev, [key]: value }));
@@ -51,15 +49,17 @@ const Profile = () => {
   const handleResetPassword = () => {
     setLoadingReset(true);
 
-    if (form.password !== form.confirmPassword) {
+    if (form?.password !== form?.confirmPassword) {
       toast.error("Passwords do not match");
       setLoadingReset(false);
       return;
     }
 
+    const body = { password: form.password };
+
     resetPassword({
       user_id: user?._id,
-      body: { password: form.password },
+      body,
       handleResetPasswordSuccess,
       handleResetPasswordFailure
     });
@@ -93,55 +93,37 @@ const Profile = () => {
 
         <div className="mb-3">
           <label htmlFor="name" className="form-label">Name</label>
-          <input type="text" className="form-control" id="name" value={form.name} disabled />
+          <input type="text" className="form-control" id="name" value={form?.name} disabled />
         </div>
         <div className="mb-3">
           <label htmlFor="email" className="form-label">Email</label>
-          <input type="text" className="form-control" id="email" value={form.email} disabled />
+          <input type="text" className="form-control" id="email" value={form?.email} disabled />
         </div>
         <div className="mb-3">
           <label htmlFor="type" className="form-label">Type</label>
-          <input type="text" className="form-control" id="type" value={form.type} disabled />
+          <input type="text" className="form-control" id="type" value={form?.type} disabled />
         </div>
 
         <h3 className='mt-4'>Change Password</h3>
-
-        <div className="mb-3 position-relative">
+        <div className="mb-3">
           <label htmlFor="password" className="form-label">New Password</label>
           <input
-            type={showPassword ? "text" : "password"}
+            type="password"
             className="form-control"
             id="password"
-            value={form.password}
+            value={form?.password}
             onChange={(e) => handleFormChange({ key: 'password', value: e.target.value })}
           />
-          <button
-            type="button"
-            className="btn btn-sm btn-light position-absolute top-50 end-0 translate-middle-y me-2"
-            onClick={() => setShowPassword(prev => !prev)}
-            style={{ zIndex: 2 }}
-          >
-            {showPassword ? "🙈" : "👁️"}
-          </button>
         </div>
-
-        <div className="mb-3 position-relative">
+        <div className="mb-3">
           <label htmlFor="confirmPassword" className="form-label">Confirm Password</label>
           <input
-            type={showConfirmPassword ? "text" : "password"}
+            type="password"
             className="form-control"
             id="confirmPassword"
-            value={form.confirmPassword}
+            value={form?.confirmPassword}
             onChange={(e) => handleFormChange({ key: 'confirmPassword', value: e.target.value })}
           />
-          <button
-            type="button"
-            className="password-eye-icon"
-            onClick={() => setShowConfirmPassword(prev => !prev)}
-            style={{ zIndex: 2 }}
-          >
-            {showConfirmPassword ? "🙈" : "👁️"}
-          </button>
         </div>
 
         <button
