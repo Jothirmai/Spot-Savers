@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-const Invoice = () => {
+const Payment = () => {
   const { state } = useLocation();
   const booking = state?.booking;
   const space = booking?.space_id;
@@ -28,50 +28,56 @@ const Invoice = () => {
   };
 
   return (
-    <div className="container py-5" style={{ fontFamily: 'Poppins, sans-serif', color: '#1f1f1f' }}>
-      <div className="card shadow-lg p-4 rounded-4">
-        <h2 className="text-center fw-bold mb-4 border-bottom pb-2">🧾 Parking Invoice</h2>
+    <div className="container py-5" style={{ fontFamily: 'Poppins, sans-serif' }}>
+      <div
+        className="card p-4 shadow-lg rounded-4"
+        style={{
+          background: 'linear-gradient(135deg, #fdfdfd, #f0f4f8)',
+          border: '1px solid #ccc',
+          maxWidth: '800px',
+          margin: 'auto'
+        }}
+      >
+        <h2 className="text-center fw-bold mb-4">
+          🧾 Parking Invoice
+        </h2>
 
-        <div className="mb-4">
-          <p className="fw-semibold mb-1"><strong>Seeker Name:</strong> {booking?.user_id?.name || 'N/A'}</p>
-        </div>
-
-        <div className="row g-4 border-top pt-3">
+        <div className="row border-bottom pb-3">
           <div className="col-12 col-md-6">
-            <p><strong>Vehicle:</strong> {booking?.vehicle_company} {booking?.vehicle_model} ({booking?.car_color})</p>
+            <p><strong>🚗 Vehicle:</strong> {booking?.vehicle_company} {booking?.vehicle_model} ({booking?.car_color})</p>
           </div>
           <div className="col-12 col-md-6">
-            <p><strong>Plate Number:</strong> {booking?.plate_number}</p>
-          </div>
-        </div>
-
-        <div className="row g-4 border-top pt-3">
-          <div className="col-12 col-md-6">
-            <p><strong>Date:</strong> {space?.date ? new Date(space.date).toLocaleDateString() : 'N/A'}</p>
-            <p><strong>Time Slot:</strong> {space?.slot_start_time} - {space?.slot_end_time}</p>
-            <p><strong>Duration:</strong> {hours} hr</p>
-          </div>
-          <div className="col-12 col-md-6">
-            <p><strong>Rate (per booking):</strong> ₹{space?.price}</p>
+            <p><strong>🔢 Plate Number:</strong> {booking?.plate_number}</p>
           </div>
         </div>
 
-        <div className="row g-4 border-top pt-3">
+        <div className="row border-bottom py-3">
           <div className="col-12 col-md-6">
-            <p><strong>Space:</strong> {space?.name}</p>
+            <p><strong>📅 Date:</strong> {space?.date ? new Date(space.date).toLocaleDateString() : 'N/A'}</p>
+            <p><strong>🕒 Time Slot:</strong> {space?.slot_start_time} - {space?.slot_end_time}</p>
+            <p><strong>⏳ Duration:</strong> {hours} hr</p>
           </div>
           <div className="col-12 col-md-6">
-            <p><strong>Parking Location:</strong> {space?.parking_id?.name}</p>
+            <p><strong>💸 Rate (per booking):</strong> ₹{space?.price}</p>
           </div>
         </div>
 
-        <div className="text-end border-top pt-4 mt-3">
-          <h4 className="fw-bold" style={{ color: '#000' }}>Total: ₹{space?.price}</h4>
+        <div className="row border-bottom py-3">
+          <div className="col-12 col-md-6">
+            <p><strong>📍 Space:</strong> {space?.name}</p>
+          </div>
+          <div className="col-12 col-md-6">
+            <p><strong>🏙️ Parking Location:</strong> {space?.parking_id?.name}</p>
+          </div>
+        </div>
+
+        <div className="text-end pt-4">
+          <h4 className="fw-bold text-dark">Total: ₹{space?.price}</h4>
         </div>
 
         <div className="text-center mt-4 border-top pt-3">
           <p className="fw-semibold text-dark">
-            Please show this invoice to the parking owner at the entrance for verification.
+            🚦 Please show this invoice to the parking owner at the entrance for verification.
           </p>
         </div>
       </div>
@@ -79,4 +85,4 @@ const Invoice = () => {
   );
 };
 
-export default Invoice;
+export default Payment;
