@@ -146,7 +146,7 @@ const Profile = () => {
 
         <button
           type="submit"
-          className="btn btn-primary mt-4 d-flex align-items-center justify-content-center"
+          className="password-eye-icon"
           onClick={handleResetPassword}
           disabled={loadingReset}
         >

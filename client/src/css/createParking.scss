@@ -278,3 +278,23 @@ $button-hover-shadow: 0 4px 10px rgba($primary-color, 0.2); // Shadow for primar
         margin-top: 25px;
     }
 }
+.input-with-icon.password-toggle {
+  position: relative;
+}
+
+.password-input {
+  padding-right: 40px; // Give space for the eye icon
+}
+
+.password-eye-icon {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0;
+  z-index: 2;
+}
