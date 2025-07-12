@@ -1,105 +1,61 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useLocation } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { simulatePayment } from '../api/api';
-import axios from 'axios';
 
 const Payment = () => {
   const { state } = useLocation();
   const booking = state?.booking;
 
-  const user = booking?.user_id?.name || 'User';
-  const userId = booking?.user_id?._id || booking?.user_id;
+  if (!booking) {
+    return <div className="container mt-5"><h4>No booking data provided.</h4></div>;
+  }
 
-  const [methods, setMethods] = useState([]);
-  const [selectedMethod, setSelectedMethod] = useState('');
-  const [instruction, setInstruction] = useState('');
-  const [amount, setAmount] = useState(booking?.price || 0);
+  const userName = booking?.user_id?.name || 'User';
+  const parkingName = booking?.parking_id?.name || 'Parking';
+  const date = booking?.date || 'N/A';
+  const start = booking?.booking_start_time;
+  const end = booking?.booking_end_time;
+  const price = booking?.price || 0;
 
-  useEffect(() => {
-    if (!booking || !booking._id) {
-      toast.error("No valid booking provided");
-      return;
-    }
-    fetchPaymentMethods();
-  }, []);
-
-  const fetchPaymentMethods = async () => {
-    try {
-      const res = await axios.get('/api/payment-methods');
-      const userMethods = res.data.filter((m) => m.user_id === userId);
-      setMethods(userMethods);
-    } catch (err) {
-      console.error(err);
-      toast.error("Failed to load payment methods");
-    }
-  };
-
-  const handleSimulate = async () => {
-    if (!selectedMethod) return toast.error("Please select a payment method");
-
-    simulatePayment({
-      method_id: selectedMethod,
-      booking_id: booking._id,
-      handleSuccess: (data) => {
-        setAmount(data.amount);
-        setInstruction(data.instruction);
-        toast.success("Payment details loaded!");
-      },
-      handleFailure: (error) => {
-        toast.error(error || "Failed to simulate payment");
-      }
-    });
-  };
-
-  const getMethodText = (id) => {
-    const m = methods.find(m => m._id === id);
-    if (!m) return '';
-    return m.cash ? 'Cash' : `UPI - ${m.upi_id}`;
+  const getDuration = () => {
+    if (!start || !end) return '-';
+    const [sh, sm] = start.split(":").map(Number);
+    const [eh, em] = end.split(":").map(Number);
+    const mins = (eh * 60 + em) - (sh * 60 + sm);
+    const hr = Math.floor(mins / 60);
+    const min = mins % 60;
+    return `${hr > 0 ? `${hr} hr ` : ''}${min} min`;
   };
 
   return (
-    <div className="container mt-5" style={{ maxWidth: '800px' }}>
+    <div className="container mt-5" style={{ maxWidth: '700px' }}>
       <div className="card shadow p-4">
-        <h3 className="mb-4">Parking Invoice</h3>
-
-        <div className="mb-3"><strong>Seeker:</strong> {user}</div>
-        <div className="mb-3"><strong>Parking Location:</strong> {booking?.parking_id?.name || 'N/A'}</div>
-        <div className="mb-3"><strong>Date:</strong> {booking?.date}</div>
-        <div className="mb-3"><strong>Time:</strong> {booking?.slot_start_time} to {booking?.slot_end_time}</div>
-        <div className="mb-3"><strong>Base Price:</strong> ₹{booking?.price}</div>
+        <h2 className="text-center mb-4">Parking Invoice</h2>
 
         <div className="mb-3">
-          <label><strong>Select Payment Method:</strong></label>
-          <select
-            className="form-select"
-            value={selectedMethod}
-            onChange={(e) => setSelectedMethod(e.target.value)}
-          >
-            <option value="">-- Select --</option>
-            {methods.map((m) => (
-              <option key={m._id} value={m._id}>
-                {m.cash ? 'Cash' : `UPI - ${m.upi_id}`}
-              </option>
-            ))}
-          </select>
+          <strong>Seeker Name:</strong> {userName}
+        </div>
+        <div className="mb-3">
+          <strong>Parking Location:</strong> {parkingName}
+        </div>
+        <div className="mb-3">
+          <strong>Date:</strong> {date}
+        </div>
+        <div className="mb-3">
+          <strong>Time Slot:</strong> {start} - {end}
+        </div>
+        <div className="mb-3">
+          <strong>Duration:</strong> {getDuration()}
+        </div>
+        <div className="mb-3">
+          <strong>Rate:</strong> ₹{price}
         </div>
 
-        <button className="btn btn-primary mt-2" onClick={handleSimulate}>
-          Simulate Payment
-        </button>
-
         <hr />
+        <h4 className="text-end">Total: ₹{price}</h4>
 
-        {selectedMethod && (
-          <div className="mt-3">
-            <div><strong>Selected Method:</strong> {getMethodText(selectedMethod)}</div>
-            <div><strong>Final Amount:</strong> ₹{amount}</div>
-            {instruction && (
-              <div className="mt-2 alert alert-info"><strong>Instructions:</strong> {instruction}</div>
-            )}
-          </div>
-        )}
+        <p className="text-muted mt-4 text-center">
+          Thank you for using our parking service!
+        </p>
       </div>
     </div>
   );
