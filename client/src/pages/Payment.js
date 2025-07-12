@@ -1,50 +1,69 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 const Payment = () => {
   const { state } = useLocation();
   const booking = state?.booking;
-
-  const user = booking?.user_id;
   const space = booking?.space_id;
-  const vehicle = {
-    company: booking?.vehicle_company,
-    model: booking?.vehicle_model,
-    plate: booking?.plate_number,
-    color: booking?.car_color,
+
+  const [duration, setDuration] = useState({ hours: 0, mins: 0 });
+
+  useEffect(() => {
+    if (space?.slot_start_time && space?.slot_end_time) {
+      setDuration(calculateDuration(space.slot_start_time, space.slot_end_time));
+    }
+  }, [space]);
+
+  const calculateDuration = (start, end) => {
+    const toMinutes = (timeStr) => {
+      const [time, modifier] = timeStr.split(/(?=[ap]m)/);
+      let [h, m] = time.split(':').map(Number);
+      if (modifier === 'pm' && h !== 12) h += 12;
+      if (modifier === 'am' && h === 12) h = 0;
+      return h * 60 + (m || 0);
+    };
+
+    const startMin = toMinutes(start);
+    const endMin = toMinutes(end);
+    const diff = endMin - startMin;
+
+    const hours = Math.floor(diff / 60);
+    const mins = diff % 60;
+    return { hours, mins };
   };
 
-  if (!booking || !space || !user) {
-    return <div className="container mt-5"><h4>Booking or space info missing.</h4></div>;
-  }
-
-  // Format date
-  const dateStr = new Date(space.date).toLocaleDateString();
-
-  // Duration calculation
-  const [startH, startM] = space.slot_start_time.split(":").map(Number);
-  const [endH, endM] = space.slot_end_time.split(":").map(Number);
-  const totalMins = (endH * 60 + endM) - (startH * 60 + startM);
-  const duration = `${Math.floor(totalMins / 60)} hr ${totalMins % 60} min`;
-
   return (
-    <div className="container mt-5" style={{ maxWidth: '700px' }}>
-      <div className="card shadow p-4">
-        <h2 className="text-center mb-4">Parking Invoice</h2>
+    <div className="container mt-5" style={{ color: '#000' }}>
+      <div className="border p-4 shadow-sm rounded">
+        <h2 className="mb-4 text-center">Parking Invoice</h2>
 
-        <div><strong>Seeker Name:</strong> {user.name}</div>
-        <div><strong>Vehicle:</strong> {vehicle.company} {vehicle.model} ({vehicle.color})</div>
-        <div><strong>Plate Number:</strong> {vehicle.plate}</div>
-        <div><strong>Date:</strong> {dateStr}</div>
-        <div><strong>Time Slot:</strong> {space.slot_start_time} - {space.slot_end_time}</div>
-        <div><strong>Duration:</strong> {duration}</div>
-        <div><strong>Rate:</strong> ₹{space.price}</div>
+        <p><strong>Seeker Name:</strong> {booking?.user_id?.name}</p>
+        <p><strong>Email:</strong> {booking?.user_id?.email}</p>
 
         <hr />
-        <h4 className="text-end">Total Amount: ₹{space.price}</h4>
 
-        <p className="text-muted mt-4 text-center">
-          Thank you for booking with us. Drive safe!
+        <p><strong>Vehicle:</strong> {booking?.vehicle_company} {booking?.vehicle_model} ({booking?.car_color})</p>
+        <p><strong>Plate Number:</strong> {booking?.plate_number}</p>
+
+        <hr />
+
+        <p><strong>Date:</strong> {space?.date ? new Date(space.date).toLocaleDateString() : 'N/A'}</p>
+        <p><strong>Time Slot:</strong> {space?.slot_start_time} - {space?.slot_end_time}</p>
+        <p><strong>Duration:</strong> {duration.hours} hr {duration.mins} min</p>
+
+        <p><strong>Rate:</strong> ₹{space?.price}</p>
+        <p><strong>Total:</strong> ₹{space?.price}</p>
+
+        <hr />
+
+        <p><strong>Space:</strong> {space?.name}</p>
+        <p><strong>Parking Location:</strong> {space?.parking_id?.name}</p>
+        <p><strong>Owner:</strong> {space?.parking_id?.user_id?.name}</p>
+
+        <hr className="my-4" />
+
+        <p className="fw-bold mt-3" style={{ fontSize: '1.1rem' }}>
+          Please show this invoice to the parking owner at the entrance for verification.
         </p>
       </div>
     </div>

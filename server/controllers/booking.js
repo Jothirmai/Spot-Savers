@@ -49,12 +49,16 @@ bookingRouter.get("/", async (req, res) => {
     if (user_id) query.user_id = user_id;
 
     let booking = await Booking.find(query)
-      .populate({
-        path: 'space_id',
-        populate: { path: 'parking_id' },
-      })
-      .populate('user_id');
-
+  .populate({
+    path: 'space_id',
+    populate: {
+      path: 'parking_id',
+      populate: {
+        path: 'user_id' 
+      }
+    }
+  })
+  .populate('user_id');
     if (owner_id) {
       booking = booking.filter((item) =>
         item?.space_id?.parking_id?.user_id?.equals(owner_id)
