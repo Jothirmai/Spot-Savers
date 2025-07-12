@@ -157,100 +157,82 @@ main {
 }
 
 /* --- Footer --- */
+/* --- Footer --- */
 .footer-section {
-    margin-top: auto; // Pushes footer to the bottom
-    background-color: $dark-bg;
-    color: $light-text;
-    padding: 3rem 1rem; // More generous padding
-    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.4); // Shadow for separation from main content
-    text-align: center; // Default center alignment for mobile
+  background-color: #0d1117; // modern GitHub-dark
+  color: #f0f6fc;
+  padding: 3rem 1rem;
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.6);
 
-    .footer-content {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-around; // Distribute items
-        align-items: flex-start;
-        gap: 2rem; // Space between footer columns
-        max-width: 1200px;
-        margin: 0 auto;
-        padding-bottom: 2rem;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.2); // Subtle separator
+  .footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(240, 246, 252, 0.15);
+  }
+
+  .footer-brand, .footer-contact {
+    flex: 1 1 300px;
+    margin-bottom: 1.5rem;
+
+    h5 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #f0f6fc;
     }
 
-    .footer-brand, .footer-contact, .footer-links {
-        flex: 1 1 250px; // Flexible columns, min width 250px
-        margin-bottom: 1.5rem; // Space for smaller screens
-        text-align: left; // Default text alignment for sections
-
-        h5 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: $light-text;
-            margin-bottom: 0.8rem;
-            letter-spacing: 1px;
-            animation: fadeIn 1.2s ease-out forwards; // Fade in brand
-            @keyframes fadeIn {
-                from { opacity: 0; transform: translateY(10px); }
-                to { opacity: 1; transform: translateY(0); }
-            }
-        }
-        h6 {
-            font-size: 1.15rem;
-            font-weight: 600;
-            color: $light-text; // Accent color for subheadings
-            margin-bottom: 1rem;
-            position: relative;
-            &::after { // Underline for footer headings
-                content: '';
-                position: absolute;
-                left: 0;
-                bottom: -5px;
-                width: 40px;
-                height: 2px;
-                background-color: $light-accent;
-            }
-        }
-        p {
-            font-size: 0.95rem;
-            margin-bottom: 0.5rem;
-            color: $light-text;
-            a {
-                color: $light-text;
-                &:hover {
-                    color: $primary-color;
-                    text-decoration: underline;
-                }
-            }
-        }
-        ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            li {
-                margin-bottom: 0.5rem;
-                a {
-                    color: $light-text;
-                    font-size: 0.95rem;
-                    &:hover {
-                        color: $primary-color;
-                        text-decoration: underline;
-                    }
-                }
-            }
-        }
+    h6 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #f0f6fc;
+      margin-bottom: 0.8rem;
+      position: relative;
+      &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -5px;
+        width: 40px;
+        height: 2px;
+        background-color: #58a6ff;
+      }
     }
-}
 
-.footer-bottom {
-    padding-top: 1.5rem;
+    p {
+      color: #c9d1d9;
+      font-size: 0.95rem;
+      margin-bottom: 0.4rem;
+
+      a {
+        color: #f0f6fc;
+        text-decoration: none;
+
+        &:hover {
+          color: #58a6ff;
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  .footer-bottom {
+    text-align: center;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(240, 246, 252, 0.1);
     font-size: 0.85rem;
-    color: rgba($light-text, 0.7); // Slightly faded text
-    .development-status {
-        margin-top: 0.5rem;
-        font-style: italic;
-    }
-}
+    color: rgba(240, 246, 252, 0.7);
 
+    .development-status {
+      margin-top: 0.3rem;
+      font-style: italic;
+    }
+  }
+}
 
 /* --- Responsive Adjustments --- */
 @media (max-width: 992px) {
