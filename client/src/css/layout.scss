@@ -185,7 +185,7 @@ main {
         h5 {
             font-size: 1.8rem;
             font-weight: 700;
-            color: $primary-color;
+            color: $light-textr;
             margin-bottom: 0.8rem;
             letter-spacing: 1px;
             animation: fadeIn 1.2s ease-out forwards; // Fade in brand
@@ -197,7 +197,7 @@ main {
         h6 {
             font-size: 1.15rem;
             font-weight: 600;
-            color: $light-accent; // Accent color for subheadings
+            color: $light-text; // Accent color for subheadings
             margin-bottom: 1rem;
             position: relative;
             &::after { // Underline for footer headings
