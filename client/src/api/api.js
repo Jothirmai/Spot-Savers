@@ -302,8 +302,15 @@ export const simulatePayment = async ({ method_id, booking_id, handleSuccess, ha
       method_id,
       booking_id,
     });
-    if (result?.data?.simulated) return handleSuccess(result.data);
+
+    if (result?.data?.amount && result?.data?.instruction) {
+      return handleSuccess(result.data); // always return result if values are valid
+    } else {
+      return handleFailure("Unexpected response from server.");
+    }
   } catch (error) {
+    console.error("simulatePayment error:", error?.response?.data || error.message);
     handleFailure(error?.response?.data?.error || "Payment simulation failed.");
   }
 };
+
