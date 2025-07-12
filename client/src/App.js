@@ -19,9 +19,6 @@ import About from './pages/About';
 import Payment from './pages/Payment';
 
 function App() {
-  React.useEffect(() => {
-    toast.info("🚀 Toast is working!");
-  }, []);
 
   return (
     <BrowserRouter>
